@@ -18,26 +18,31 @@ pipeline {
 				echo "BUILD_URL: $env.BUILD_URL"
 			}
 		}
+		stage('Compile'){
+			steps {
+				sh "mvn clean compile"
+			}
+		}		
 		stage('Test'){
 			steps {
-				echo "Test"
+				sh "mvn test"
 			}
 		}
 		stage('Integration Test'){
 			steps {
-				echo "Integration Test"
+				sh "mvn failsafe:integration-test failsafe:verify"
 			}
 		}
 	}
 	post {
 		always {
-			echo "I am awesome. I run always"
+			echo "I run always"
 		}
 		success {
-			echo "I am awesome. I run when you succeed"
+			echo "I run when you succeed"
 		}
 		failure {
-			echo "I am awesome. I run when you fail"
+			echo "I run when you fail"
 		}
 	}
 }
