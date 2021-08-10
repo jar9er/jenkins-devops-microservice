@@ -1,8 +1,13 @@
 pipeline {
 	agent any
+	environment {
+		mavenHome = tool 'myMaven'
+		PATH = "$mavenHome/bin:$PATH"
+	}
 	stages {
 		stage('Build'){
 			steps {
+				sh 'mvn --version'
 				echo "Build"
 				echo "$PATH"
 				echo "BUILD_NUMBER: $env.BUILD_NUMBER"
@@ -10,7 +15,6 @@ pipeline {
 				echo "JOB_NAME: $env.JOB_NAME"
 				echo "BUILD_TAG: $env.BUILD_TAG"
 				echo "BUILD_URL: $env.BUILD_URL"
-				//sh 'mvn --version'
 			}
 		}
 		stage('Test'){
